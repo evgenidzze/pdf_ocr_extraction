@@ -1,21 +1,26 @@
 import logging
 import os
 from dotenv import load_dotenv
-from pathlib import Path
 import asyncio
-from typing import Union
-
-from Providers.base import Provider
 from Providers.mistral_provider import MistralOCR
 from Providers.reducto_provider import ReductoOCR
 
 load_dotenv()
 MISTRAL_API_KEY = os.getenv('API_KEY_MISTRAL')
 API_KEY_REDUCTO = os.getenv('API_KEY_REDUCTO')
+logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
 
 async def main():
+    """
+    Main entry point for the OCR processing script.
 
+    This function:
+    - Prompts the user to select an OCR provider (Mistral or Reducto),
+    - Initializes the selected provider with the corresponding API key,
+    - Processes all PDF files in the input folder,
+    - Saves the OCR results to the output folder.
+    """
     input_folder = 'sample_files'
     output_folder = 'output'
     provider_choice = input("Choose OCR provider (1 for Mistral, 2 for Reducto): ")
